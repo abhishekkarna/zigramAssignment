@@ -1,0 +1,29 @@
+<form [formGroup]="searchFormGroup" (submit)="search()">
+  <div class="input-group">
+    <div class="input-group-prepend rounded-left">
+      <mat-select formControlName="type" panelClass="searchDropdownPanel" placeholder="Choose Type" class="searchDropdown"
+        #select>
+        <mat-option value="drinks">
+          Cocktail
+        </mat-option>
+        <mat-option value="ingredients">
+          Ingredient
+        </mat-option>
+      </mat-select>
+    </div>
+    <input type="search" [attr.disabled]="disableSearchBox? true : null"  [placeholder]="placeholder" [matAutocomplete]="auto" #inputField class="form-control" formControlName="key">
+    <mat-autocomplete (optionSelected)="optionSelected($event)" class="analyticsSearchAutocomplete"
+      #auto="matAutocomplete">
+      <ng-container *ngIf="select.value=='ingredients'">
+        <mat-option *ngFor="let data of searchedProductsAsObs$ | async" [value]="data?.idIngredient">
+          <span>{{data?.strIngredient}}</span>
+        </mat-option>
+      </ng-container>
+      <ng-container *ngIf="select.value=='drinks'">
+        <mat-option *ngFor="let data of searchedProductsAsObs$ | async" [value]="data?.idDrink">
+          <span>{{data?.strDrink}}</span> <span class="ml-2 text-secondary">( {{data?.strAlcoholic}} )</span>
+        </mat-option>
+      </ng-container>
+    </mat-autocomplete>
+  </div>
+</form>

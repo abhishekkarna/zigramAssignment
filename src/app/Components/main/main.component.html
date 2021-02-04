@@ -1,0 +1,18 @@
+<mat-drawer-container class="p-4 h-100 w-100">
+  <mat-drawer mode="side" class="example-container" [opened]="productService?.sidebarOpened$ | async">
+    <app-sidebar (filterApplied)="filterApplied($event)" [products]="products"></app-sidebar>
+  </mat-drawer>
+  <mat-drawer-content>
+    <header>
+      <h4>{{selectedCategory ? selectedCategory : "Apply filter to see drinks" }}</h4>
+    </header>
+    <main>
+      <mat-grid-list cols="2" rowHeight="1:1">
+        <mat-grid-tile *ngFor="let item of getAvailableProducts$ | async">
+          <app-product-detail [title]="item?.strDrink" [thumbnail]="item?.strDrinkThumb" [type]="selectedCategory">{{item?.idDrink}}
+          </app-product-detail>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </main>
+  </mat-drawer-content>
+</mat-drawer-container>
