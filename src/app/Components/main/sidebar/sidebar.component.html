@@ -1,0 +1,16 @@
+<section>
+  <ng-container *ngFor="let item of products">
+    <header>
+      <h3>{{item?.name}}</h3>
+    </header>
+    <!-- <pre>{{item?.getitems | async | json}}</pre> -->
+    <main>
+      <mat-chip-list [selectable]="true" #chipList>
+        <mat-chip  #chip="matChip" (click)='applyFilter(chip,item)' [value]="eachItem[item?.key]"
+          *ngFor="let eachItem of item?.getitems | async">
+          {{eachItem[item?.key]}}
+        </mat-chip>
+      </mat-chip-list>
+    </main>
+  </ng-container>
+</section>
